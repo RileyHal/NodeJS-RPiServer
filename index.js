@@ -1,4 +1,4 @@
-var http = require('http')
+let http = require('http')
 const express = require('express')
 const app = express()
 const router = express.Router()
@@ -25,14 +25,14 @@ function logMessage(message){
 }
 
 function successGetJSON(data){
-  var obj = new Object()
+  let obj = new Object()
   obj.status = 'ok'
   obj.data = data
   return obj
 }
 
 function JSONMessage(status, message){
-  var obj = new Object()
+  let obj = new Object()
   obj.status = status
   obj.message = message
   return obj
@@ -80,7 +80,7 @@ router.post('/v1/set', (req,res,next)=>{
     res.status = 400
     res.json(JSONMessage('error', 'pumpDuration, pumpInterval or mode is out of range'))
   } 
-  
+
   else {
     pumpInterval = tempPumpInterval
     pumpDuration = tempPumpDuration
