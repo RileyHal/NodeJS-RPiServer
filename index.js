@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const router = express.Router()
 const bodyParser = require('body-parser')
+const fileService = require('./fileServices.js');
 
 app.use(router)
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,10 +15,13 @@ let isEmpty = false
 let lightLevel = .33
 let pumpActive = false
 let temperature = 94
+
+//Default settings, If settings file is found these values will be replaced with found values
 let pumpDuration = 5
-let pumpInterval = 60
+let pumpInterval = 120
 let mode = 2
 
+//set settings upon startup, create settings file if one does not exist already
 function logMessage(message){
   let date_ob = new Date()
   let currentTime = date_ob.getHours()+":"+date_ob.getMinutes()+":"+date_ob.getSeconds()+" - "
@@ -95,4 +99,5 @@ router.post('/v1/set', (req,res,next)=>{
 
 http.createServer(app).listen(3030, () => {
   logMessage("Server initiated, Listening on port 3030")
+  fileService.initialize();
 })
