@@ -1,7 +1,8 @@
 const fs = require('fs');
+const main = require('./index.js');
 
 exports.initialize = initialize
-exports.writeSettings = writeSettings
+exports.writeFile = writeFile
 
 function logMessage(message){
   let date_ob = new Date()
@@ -10,7 +11,7 @@ function logMessage(message){
 }
 
 //writes to file in JSON String format
-function writeSettings(filename, pumpD, pumpI, rpiMode){
+function writeFile(filename, pumpD, pumpI, rpiMode){
   let testObj = new Object()
     testObj.pumpDuration = pumpD
     testObj.pumpInterval = pumpI
@@ -36,7 +37,7 @@ function initialize(){
     } else {
       //file doesn't exist, write default values to file
       logMessage("Settings file not found, Creating new file")
-      writeSettings('settings.txt',1, 2, 0)
+      writeFile('settings.txt',main.pumpDuration, main.pumpInterval, main.mode)
     }
   } catch(err) {
     console.error(err)

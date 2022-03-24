@@ -1,1 +1,0 @@
-{"pumpDuration":1,"pumpInterval":2,"mode":0}

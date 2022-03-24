@@ -16,12 +16,15 @@ let lightLevel = .33
 let pumpActive = false
 let temperature = 94
 
-//Default settings, If settings file is found these values will be replaced with found values
-let pumpDuration = 5
-let pumpInterval = 120
-let mode = 2
+//Default values if settings not found
+let pumpDuration = 324
+let pumpInterval = 33
+let mode = 1
 
-//set settings upon startup, create settings file if one does not exist already
+exports.pumpDuration = pumpDuration
+exports.pumpInterval = pumpInterval
+exports.mode = mode
+
 function logMessage(message){
   let date_ob = new Date()
   let currentTime = date_ob.getHours()+":"+date_ob.getMinutes()+":"+date_ob.getSeconds()+" - "
@@ -85,19 +88,20 @@ router.post('/v1/set', (req,res,next)=>{
     res.json(JSONMessage('error', 'pumpDuration, pumpInterval or mode is out of range'))
   } 
 
+  //If everything is validated write to settings file and set new values
   else {
+    fileService.writeFile('settings.txt', tempPumpDuration, tempPumpInterval, tempMode)
     pumpInterval = tempPumpInterval
     pumpDuration = tempPumpDuration
     mode = tempMode
 
-    let message = "Set pumpDuration to "+pumpDuration+", pumpInterval to "+pumpInterval+", and mode to "+mode
-    logMessage(message)
     res.status = 200
-    res.json(JSONMessage('ok', message))
+    res.json(JSONMessage('ok', "Set pumpDuration to "+pumpDuration+", pumpInterval to "+pumpInterval+", and mode to "+mode))
   }
 })
 
 http.createServer(app).listen(3030, () => {
   logMessage("Server initiated, Listening on port 3030")
+  //check to see if settings.txt exists, if not create on with default values
   fileService.initialize();
 })
