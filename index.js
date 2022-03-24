@@ -95,7 +95,7 @@ router.post('/v1/set', (req,res,next)=>{
     obj.pumpDuration = tempPumpDuration
     obj.pumpInterval = tempPumpInterval
     obj.mode = tempMode
-    fileService.writeFile('./settings/settings.json', obj)
+    fileService.writeJsonFile('./settings/settings.json', obj)
 
     pumpInterval = tempPumpInterval
     pumpDuration = tempPumpDuration

@@ -2,7 +2,7 @@ const fs = require('fs');
 const main = require('./index.js');
 
 exports.initialize = initialize
-exports.writeFile = writeFile
+exports.writeJsonFile = writeJsonFile
 
 function logMessage(message){
   let date_ob = new Date()
@@ -11,7 +11,7 @@ function logMessage(message){
 }
 
 //writes object to file in JSON String format
-function writeFile(filename, obj){
+function writeJsonFile(filename, obj){
   fs.writeFile(filename, JSON.stringify(obj), (err) => {
     if (err) throw err;
     logMessage('Wrote to file ' + filename + ": " + JSON.stringify(obj))
@@ -38,7 +38,7 @@ function initialize(){
       obj.pumpDuration = main.pumpDuration
       obj.pumpInterval = main.pumpInterval
       obj.mode = main.mode
-      writeFile('./settings/settings.json', obj)
+      writeJsonFile('./settings/settings.json', obj)
     }
   } catch(err) {
     console.error(err)
