@@ -10,22 +10,19 @@ function logMessage(message){
   console.log(currentTime + message)
 }
 
-//writes to file in JSON String format
-function writeFile(filename, pumpD, pumpI, rpiMode){
-  let testObj = new Object()
-    testObj.pumpDuration = pumpD
-    testObj.pumpInterval = pumpI
-    testObj.mode = rpiMode
-    fs.writeFile(filename, JSON.stringify(testObj), (err) => {
-      if (err) throw err;
-      logMessage('Wrote to file ' + filename + ": " + JSON.stringify(testObj))
-    });
+//writes object to file in JSON String format
+function writeFile(filename, obj){
+  fs.writeFile(filename, JSON.stringify(obj), (err) => {
+    if (err) throw err;
+    logMessage('Wrote to file ' + filename + ": " + JSON.stringify(obj))
+  });
 }
 
+//Checks if settings.txt exists
 function initialize(){
   try {
+    //if file exists
     if (fs.existsSync('settings.txt')) {
-      //file exists
       fs.readFile('settings.txt', 'utf8', function(err, data){
         // Display the file content
         const storedSettings = JSON.parse(data)
@@ -34,10 +31,14 @@ function initialize(){
         mode = parseInt(storedSettings.mode)
         logMessage("Set stored settings " + data);
     });
+    //else file doesn't exist, write default values to file
     } else {
-      //file doesn't exist, write default values to file
       logMessage("Settings file not found, Creating new file")
-      writeFile('settings.txt',main.pumpDuration, main.pumpInterval, main.mode)
+      let obj = new Object()
+      obj.pumpDuration = main.pumpDuration
+      obj.pumpInterval = main.pumpInterval
+      obj.mode = main.mode
+      writeFile('settings.txt', obj)
     }
   } catch(err) {
     console.error(err)

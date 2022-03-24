@@ -20,7 +20,8 @@ let temperature = 94
 let pumpDuration = 324
 let pumpInterval = 33
 let mode = 1
-
+ 
+//export these values for fileServices to use for default values
 exports.pumpDuration = pumpDuration
 exports.pumpInterval = pumpInterval
 exports.mode = mode
