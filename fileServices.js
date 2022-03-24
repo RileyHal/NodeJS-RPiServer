@@ -22,8 +22,8 @@ function writeFile(filename, obj){
 function initialize(){
   try {
     //if file exists
-    if (fs.existsSync('settings.json')) {
-      fs.readFile('settings.json', 'utf8', function(err, data){
+    if (fs.existsSync('./settings/settings.json')) {
+      fs.readFile('./settings/settings.json', 'utf8', function(err, data){
         // Display the file content
         const storedSettings = JSON.parse(data)
         pumpDuration = parseInt(storedSettings.pumpDuration)
@@ -38,7 +38,7 @@ function initialize(){
       obj.pumpDuration = main.pumpDuration
       obj.pumpInterval = main.pumpInterval
       obj.mode = main.mode
-      writeFile('settings.json', obj)
+      writeFile('./settings/settings.json', obj)
     }
   } catch(err) {
     console.error(err)
