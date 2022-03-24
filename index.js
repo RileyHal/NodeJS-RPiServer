@@ -4,7 +4,7 @@ const app = express()
 const router = express.Router()
 const bodyParser = require('body-parser')
 const fileService = require('./fileServices.js');
-
+let port = 3030
 app.use(router)
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -106,8 +106,8 @@ router.post('/v1/set', (req,res,next)=>{
   }
 })
 
-http.createServer(app).listen(3030, () => {
-  logMessage("Server initiated, Listening on port 3030")
+http.createServer(app).listen(port, () => {
+  logMessage("Server initiated, Listening on port "+port)
   //check to see if settings.txt exists, if not create on with default values
   fileService.initialize();
 })
