@@ -23,7 +23,7 @@ function initialize(){
   try {
     //if file exists
     if (fs.existsSync('settings.json')) {
-      fs.readFile('settings.txt', 'utf8', function(err, data){
+      fs.readFile('settings.json', 'utf8', function(err, data){
         // Display the file content
         const storedSettings = JSON.parse(data)
         pumpDuration = parseInt(storedSettings.pumpDuration)

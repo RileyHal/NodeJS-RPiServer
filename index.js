@@ -16,9 +16,10 @@ let lightLevel = .33
 let pumpActive = false
 let temperature = 94
 
-//Default values if settings not found
-let pumpDuration = 324
-let pumpInterval = 33
+//Default values if settings.json not found
+let pumpDuration = 5
+let pumpInterval = 500
+//0=off, 1=auto, 2= timer
 let mode = 1
  
 //export these values for fileServices to use for default values
@@ -91,7 +92,12 @@ router.post('/v1/set', (req,res,next)=>{
 
   //If everything is validated write to settings file and set new values
   else {
-    fileService.writeFile('settings.txt', tempPumpDuration, tempPumpInterval, tempMode)
+    let obj = new Object()
+    obj.pumpDuration = tempPumpDuration
+    obj.pumpInterval = tempPumpInterval
+    obj.mode = tempMode
+    fileService.writeFile('settings.json', obj)
+
     pumpInterval = tempPumpInterval
     pumpDuration = tempPumpDuration
     mode = tempMode
