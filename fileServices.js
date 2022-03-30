@@ -1,9 +1,6 @@
 const fs = require('fs');
 const main = require('./index.js');
 
-exports.initialize = initialize
-exports.writeJsonFile = writeJsonFile
-
 function logMessage(message){
   let date_ob = new Date()
   let currentTime = date_ob.getHours()+":"+date_ob.getMinutes()+":"+date_ob.getSeconds()+" - "
@@ -29,6 +26,7 @@ function initialize(){
         pumpDuration = parseInt(storedSettings.pumpDuration)
         pumpInterval = parseInt(storedSettings.pumpInterval)
         mode = parseInt(storedSettings.mode)
+        main.setSettings(pumpDuration, pumpInterval, mode)
         logMessage("Set stored settings " + data);
     });
     //else file doesn't exist, write default values to file
@@ -44,3 +42,6 @@ function initialize(){
     console.error(err)
   }
 }
+
+exports.initialize = initialize
+exports.writeJsonFile = writeJsonFile
